@@ -67,6 +67,7 @@ class ProductForm
                 ->schema([
                     // 7. Upload Banyak Foto sekaligus
                     FileUpload::make('images')
+                        ->disk('public')
                         ->multiple() // Boleh lebih dari 1
                         ->directory('products') // Masuk folder storage/app/public/products
                         ->maxFiles(5)
