@@ -83,8 +83,11 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(University::class);
     }
-
-
+    
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 
     protected static function booted()
     {
