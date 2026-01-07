@@ -4,6 +4,9 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Livewire\ProductDetail;
+use App\Livewire\MyProducts;
+use App\Livewire\ProductCreate;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -11,9 +14,19 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('/dashboard', MyProducts::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::get('/product/create', ProductCreate::class)
+    ->middleware(['auth', 'verified'])
+    ->name('product.create');
+
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
+
+Route::get('/product/{slug}', ProductDetail::class)->name('product.detail');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
