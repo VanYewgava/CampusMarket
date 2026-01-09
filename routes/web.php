@@ -9,6 +9,8 @@ use App\Livewire\MyProducts;
 use App\Livewire\ProductCreate;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use App\Livewire\Chat;
+use App\Livewire\Inbox;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +19,8 @@ Route::get('/', function () {
 Route::get('/dashboard', MyProducts::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+    
 
 Route::get('/product/create', ProductCreate::class)
     ->middleware(['auth', 'verified'])
@@ -30,7 +34,8 @@ Route::get('/product/{slug}', ProductDetail::class)->name('product.detail');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
-
+    Route::get('/chat/{id}', Chat::class)->name('chat');
+    Route::get('/inbox', Inbox::class)->name('inbox');
     Route::get('settings/profile', Profile::class)->name('profile.edit');
     Route::get('settings/password', Password::class)->name('user-password.edit');
     Route::get('settings/appearance', Appearance::class)->name('appearance.edit');

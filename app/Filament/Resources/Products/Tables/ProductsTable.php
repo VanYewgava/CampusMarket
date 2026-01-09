@@ -19,9 +19,11 @@ class ProductsTable
         return $table
             ->columns([
                 ImageColumn::make('images')
+                    ->disk('public')
+                    ->getStateUsing(fn ($record) => $record->images)
                     ->circular()
-                    ->stacked() // Foto menumpuk cantik
-                    ->limit(3), // Tampilkan max 3 foto
+                    ->stacked()
+                    ->limit(3),
 
                 TextColumn::make('name')
                     ->searchable()

@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductForm
 {
@@ -23,7 +24,10 @@ class ProductForm
                 ->schema([
                     // 1. Pilih Penjual (Admin bisa pilih siapa pemilik barang ini)
                     Select::make('user_id')
-                        ->relationship('seller', 'name') // Mengambil nama dari relasi 'seller' (User)
+                        ->relationship('seller', 'name', modifyQueryUsing: function (Builder $query) {
+                        // 👇 LOGIC FILTER: Hanya ambil user yang statusnya 'approved'
+                        return $query->where('seller_status', 'approved');
+                    })
                         ->searchable()
                         ->required()
                         ->label('Penjual (Mahasiswa)'),
@@ -68,11 +72,11 @@ class ProductForm
                     // 7. Upload Banyak Foto sekaligus
                     FileUpload::make('images')
                         ->disk('public')
-                        ->multiple() // Boleh lebih dari 1
-                        ->directory('products') // Masuk folder storage/app/public/products
-                        ->maxFiles(5)
-                        ->reorderable()
-                        ->columnSpanFull(),
+                        ->directory('products')
+                        ->multiple()
+                        ->preserveFilenames()
+                        ->columnSpanFull()
+
                 ])
             ]);
     }

@@ -29,6 +29,7 @@ class CreateNewUser implements CreatesNewUsers
             ],
             'nim' => ['required', 'string', 'max:20'],
             'major' => ['required', 'string', 'max:100'],
+            'phone' => ['required', 'string', 'max:15', 'min:10'],
             'password' => $this->passwordRules(),
         ])->validate();
 
@@ -37,6 +38,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'nim' => $input['nim'],
             'major' => $input['major'],
+            'phone' => $input['phone'],
             'password' => $input['password'],
         ]);
     }

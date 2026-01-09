@@ -34,6 +34,14 @@
                         @if (Route::has('login'))
                             @auth
                                 <a href="{{ url('/dashboard') }}" class="text-sm font-medium text-gray-700 hover:text-orange-600 transition">Toko Saya</a>
+                            
+                                <a href="{{ route('inbox') }}" class="text-sm font-medium text-gray-700 hover:text-orange-600 transition relative">
+                                Pesan
+                                <span class="absolute -top-1 -right-2 flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                </span>
+                            </a>
                             @else
                                 <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 hover:text-orange-600 transition">Masuk</a>
                                 @if (Route::has('register'))
@@ -55,8 +63,14 @@
             
             <div x-show="open" x-cloak class="md:hidden bg-white border-t border-gray-100 p-4 space-y-3 shadow-lg">
                 <a href="/" class="block text-base font-medium text-gray-700 hover:text-orange-600">Beranda</a>
-                <a href="{{ route('login') }}" class="block text-base font-medium text-gray-700 hover:text-orange-600">Masuk</a>
-                <a href="{{ route('register') }}" class="block text-base font-medium text-orange-600">Daftar Akun</a>
+                
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="block text-base font-medium text-gray-700 hover:text-orange-600">Toko Saya</a>
+                    <a href="{{ route('inbox') }}" class="block text-base font-medium text-gray-700 hover:text-orange-600">Pesan</a>
+                @else
+                    <a href="{{ route('login') }}" class="block text-base font-medium text-gray-700 hover:text-orange-600">Masuk</a>
+                    <a href="{{ route('register') }}" class="block text-base font-medium text-orange-600">Daftar Akun</a>
+                @endauth
             </div>
         </nav>
 
